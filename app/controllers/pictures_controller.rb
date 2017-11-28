@@ -1,6 +1,9 @@
 class PicturesController < ApplicationController
   def index
     @pictures = Picture.all
+    @most_recent_pictures = Picture.most_recent_five
+    @pictures_older_than_month = Picture.created_before(Time.now - 1.month)
+    @picture = Picture
   end
 
   def show
@@ -35,6 +38,7 @@ class PicturesController < ApplicationController
     @picture.title = params[:picture][:title]
     @picture.artist = params[:picture][:artist]
     @picture.url = params[:picture][:url]
+    @picture.created_at = params[:picture][:created_at]
 
     if @picture.save
       redirect_to "/pictures/#{@picture.id}"
@@ -43,7 +47,7 @@ class PicturesController < ApplicationController
     end
 
   end
-  
+
   def destroy
     @picture = Picture.find(params[:id])
     @picture.destroy

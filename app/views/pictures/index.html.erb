@@ -6,3 +6,32 @@
   <!-- <img src="<%= picture.url %>" alt="<%= picture.title %>"> -->
   <%= link_to(image_tag(picture.url), "/pictures/#{picture.id}") %>
 <% end %>
+
+<h1>Most recent pictures</h1>
+
+  <% @most_recent_pictures.each do |picture| %>
+    <h3><%= picture.title %></h3>
+    <%= link_to(image_tag(picture.url), "/pictures/#{picture.id}") %>
+  <% end %>
+
+  <h1>Pictures Older than a month</h1>
+    <h3> There are <%= @pictures_older_than_month.count %> pictures.</h3>
+
+    <% @pictures_older_than_month.each do |picture| %>
+      <h3><%= picture.title %></h3>
+      <%= link_to(image_tag(picture.url), "/pictures/#{picture.id}") %>
+    <% end %>
+
+<h1>Pictures by Year</h1>
+<% year = (2015..2017) %>
+<% year.each do |year|  %>
+  <% picture_year = @picture.created_in_year(year) %>
+
+
+    <h2> <%= year %></h2>
+    <% picture_year.each do |picture| %>
+      <h3> <%= picture.title %>  </h3>
+      <%= link_to(image_tag(picture.url), "/pictures/#{picture.id}") %>
+    <% end %>
+  
+<% end %>
